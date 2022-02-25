@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+
 let players =
    [
        {
@@ -53,26 +54,51 @@ let players =
        },
    ]
  
-   router.post('/playerss', function (req, res) {
+//    router.post('/playerss', function (req, res) {
  
-       //LOGIC WILL COME HER
-       let newplayer =req.body.newplayer;
-       for(i=0;i<players.length;i++){
-           if(players[i].name==newplayer.name){
-               res.send({"msg":"player already exist"})
-           }else{
-               players.push(newplayer)
-               res.send({"msg":players})
-           }
-       }
+//        //LOGIC WILL COME HER
+//        let newplayer =req.body.newplayer;
+//        for(i=0;i<players.length;i++){
+//            if(players[i].name==newplayer.name){
+//                res.send({"msg":"player already exist"})
+//            }else{
+//                players.push(newplayer)
+//                res.send({"msg":players})
+//            }
+//        }
 
-       res.send(  { data: players , status: true }  )
-   })
+//        res.send(  { data: players , status: true }  )
+//    })
   
    router.post('/players/:playerName/bookings/:bookingId', function (req, res) {
  
        //LOGIC WILL COME HER
-       res.send(  { data: players , status: true }  )
+       let name =req.params.playerName;
+       let isplayerpresent=false;
+       for(let i=0;i<players.length;i++){
+           if(players[i].name==name){
+               isplayerpresent=true;
+           }
+       }
+       if (!isplayerpresent){
+           return res.send("player not present")
+       }
+           
+       let booking =req.body;
+       let bookingId=req.params.bookingId;
+       for (let i=0;i<players.length;i++){
+           if(players[i].name==name){
+               let isbookingpresent=false;
+           }
+       
+       for(let j=0;j<players[i].booking.length;j++){
+           if(players[i].booking[j].bookingNumber==bookingId){
+               return res.send("booking with this id already present")
+           }
+       }
+         res .send("player present")
+
+    }
    })
   
 module.exports = router;
