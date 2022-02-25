@@ -1,42 +1,49 @@
-const express = require('express');
+const express = require("express");
+const { route } = require("express/lib/application");
 const router = express.Router();
 
-router.get('/movies', function(req, res) {
-   
-    res.send('["fukrey","rang de basanti","one","avengers"]')
-})
+// you will be given an array of persons ( i.e an array of objects )..each person will have  a {name: String , age: Number, votingStatus: true/false(Boolean)}
+// take input in query param as votingAge..and for all the people above that age, change votingStatus as true
+// also return an array consisting of only the person that can vote
 
-router.get('/movies/:movieid',function(req,res){
-      
-let movi=["fukrey","one","two","three","four"]
-let value=req.params.movieid;
-if(value>movi.length-1){
-    res.send('does not exists')
-}else{
-    res.send(movi[value])
-}
-
-})
-router.get('/movies',function(req,res){
-
-    res.send('[{id:1,name:"harry poter1"},{id:2,name:"harry poter3"},{id:3,name:"harry potter4"}]')
-})
-
-router.get('/cinema/:cinemaid',function(req,res){
-   let cinem=[{id:1,name:"harry poter1"},{id:2,name:"harry poter3"},{id:3,name:"harry potter4"}]
-   let value =req.params.cinemaid;
-   let found =false;
-   for(let i=0;i<cinem.length;i++){
-if(cinem[i].id==value){
-    found=true;
-    res.send(cinem[i])
-    break;
-}
-   }
-})
-
-
-
-
+let persons = [
+  {
+    name: "PK",
+    age: 10,
+    votingStatus: false,
+  },
+  {
+    name: "SK",
+    age: 20,
+    votingStatus: false,
+  },
+  {
+    name: "AA",
+    age: 70,
+    votingStatus: false,
+  },
+  {
+    name: "SC",
+    age: 5,
+    votingStatus: false,
+  },
+  {
+    name: "HO",
+    age: 40,
+    votingStatus: false,
+  },
+];
+router.get("/query-param", function (req, res) {
+  let votingAge = req.query.votingAge;
+  let arr = [];
+  for (let i = 0; i < persons.length; i++) {
+    if (persons[i].age >= votingAge) {
+      persons[i].votingStatus = true;
+      arr.push(persons[i]);
+    }
+  }
+  res.send(arr);
+  console.log(arr);
+});
 
 module.exports = router;
