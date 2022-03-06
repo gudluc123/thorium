@@ -8,16 +8,39 @@ router.get("/test-me", function (req, res) {
     res.send("My first ever api!")
 })
 
-router.post("/createUser", UserController.createUser  )
+router.get('/test-me-1',function(req,res){
+    res.send({a:45,b:36})
+})
 
-router.get("/getUsersData", UserController.getUsersData)
+router.get('/students/:name',function(req,res){
+    let studentsName=req.params.name;
+    res.send(studentsName)
+})
+router.post('/post-1',function(req,res){
+    res.send([2,3,4,5])
+})
+router.post('/post-2',function(req,res){
+    let id = req.body.user
+    let pwd =req.body.pwd
+    console.log(id,pwd)
+    res.send({msg:"hi",status:true})
+})
+router.get('/post-3',function(req,res){
+    let data =req.query
+    console.log(data)
+    res.send({msg:data})
+})
 
-router.post("/createBook", BookController.createBook  )
+// router.post("/createUser", UserController.createUser  )
 
-router.get("/getBooksData", BookController.getBooksData)
+// router.get("/getUsersData", UserController.getUsersData)
 
-router.post("/updateBooks", BookController.updateBooks)
-router.post("/deleteBooks", BookController.deleteBooks)
+// router.post("/createBook", BookController.createBook  )
+
+// router.get("/getBooksData", BookController.getBooksData)
+
+// router.post("/updateBooks", BookController.updateBooks)
+// router.post("/deleteBooks", BookController.deleteBooks)
 
 //MOMENT JS
 const moment = require('moment');
