@@ -100,6 +100,37 @@ const deleteUser = async function(req,res){
    res.send('data is deleted')
 }
 
+
+ const postMessage = async function(req,res){
+   
+  let message = req.body.message
+  
+  // let token = req.headers["x-auth-token"]
+  // if (!token) return res.send({status:false,msg:"token is not present "})
+     
+  // let decodedToken = jwt.verify(token,"functionup-thorium")
+
+  // if (!decodedToken) return res.send({status:false,msg:"token is not valid"})
+   
+  // let modifiedUser = req.params.userId
+
+  // let decodedUser = decodedToken.userId
+
+  // if (modifiedUser != decodedUser)  return res.send({status:false,msg:"this user is not authorised to post on web"})
+
+  let user = await userModel.findById(req.params.userId)
+     
+  if (!user) return res.send({status:false,msg:"no user exists"})
+
+  let updatePost = user.post
+  updatePost.push(message)
+
+  let updatedUser = await userModel.findOneAndUpdate({_id:user._id},{post:updatePost},{new:true})
+
+  res.send({status:true,mag:updatedUser})
+    
+ }
+module.exports.postMessage = postMessage
 module.exports.createUser = createUser;
 module.exports.getUserData = getUserData;
 module.exports.updateUser = updateUser;
